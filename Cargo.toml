@@ -1,8 +1,8 @@
 [package]
 name = "hcnet-xdr"
 description = "Hcnet XDR"
-homepage = ""
-repository = ""
+homepage = "https://github.com/HashCash-Consultants/rs-hcnet-xdr.git"
+repository = "https://github.com/HashCash-Consultants/rs-hcnet-xdr.git"
 authors = ["Hashcash"]
 license = "Apache-2.0"
 version = "20.0.2"
