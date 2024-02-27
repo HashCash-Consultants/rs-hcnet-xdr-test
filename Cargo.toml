@@ -1,11 +1,11 @@
 [package]
 name = "hcnet-xdr"
-description = "Hcnet XDR"
-homepage = "https://github.com/HashCash-Consultants/rs-hcnet-xdr.git"
-repository = "https://github.com/HashCash-Consultants/rs-hcnet-xdr.git"
-authors = ["Hashcash"]
+description = "Stellar XDR types, encoding, and decoding."
+homepage = "https://github.com/HashCash-Consultants/rs-hcnet-xdr"
+repository = "https://github.com/HashCash-Consultants/rs-hcnet-xdr"
+authors = ["Stellar Development Foundation <info@hcnet.org>"]
 license = "Apache-2.0"
-version = "20.0.3"
+version = "20.1.0"
 edition = "2021"
 rust-version = "1.74.0"
 

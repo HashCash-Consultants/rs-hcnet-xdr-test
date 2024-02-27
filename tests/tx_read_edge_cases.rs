@@ -5,13 +5,13 @@
 #![cfg(all(feature = "std", feature = "base64"))]
 
 #[cfg(feature = "curr")]
-use stellar_xdr::curr as stellar_xdr;
+use hcnet_xdr::curr as hcnet_xdr;
 #[cfg(feature = "next")]
-use stellar_xdr::next as stellar_xdr;
+use hcnet_xdr::next as hcnet_xdr;
 
 use std::io::{self, Cursor};
-use stellar_xdr::Error;
-use stellar_xdr::{Limited, Limits, ReadXdr, WriteXdr};
+use hcnet_xdr::Error;
+use hcnet_xdr::{Limited, Limits, ReadXdr, WriteXdr};
 
 #[test]
 fn test_read_interrupts_and_residuals() -> Result<(), Error> {

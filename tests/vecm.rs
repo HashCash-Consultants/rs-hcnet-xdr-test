@@ -5,11 +5,11 @@
 #![cfg(feature = "std")]
 
 #[cfg(feature = "curr")]
-use stellar_xdr::curr as stellar_xdr;
+use hcnet_xdr::curr as hcnet_xdr;
 #[cfg(feature = "next")]
-use stellar_xdr::next as stellar_xdr;
+use hcnet_xdr::next as hcnet_xdr;
 
-use stellar_xdr::{BytesM, Limits, ReadXdr, ScVal};
+use hcnet_xdr::{BytesM, Limits, ReadXdr, ScVal};
 
 #[test]
 fn valid_len() {

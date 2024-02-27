@@ -5,14 +5,14 @@
 #![cfg(all(feature = "std", feature = "serde"))]
 
 #[cfg(feature = "curr")]
-use stellar_xdr::curr as stellar_xdr;
+use hcnet_xdr::curr as hcnet_xdr;
 #[cfg(feature = "next")]
-use stellar_xdr::next as stellar_xdr;
+use hcnet_xdr::next as hcnet_xdr;
 
-use stellar_xdr::{BytesM, Hash, StringM, VecM};
+use hcnet_xdr::{BytesM, Hash, StringM, VecM};
 
 #[cfg(feature = "curr")]
-use stellar_xdr::AccountId;
+use hcnet_xdr::AccountId;
 
 #[cfg(feature = "curr")]
 use std::str::FromStr;

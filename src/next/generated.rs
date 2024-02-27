@@ -1,67 +1,67 @@
 // Module  is generated from:
-//  xdr/next/Hcnet-SCP.x
-//  xdr/next/Hcnet-contract-config-setting.x
-//  xdr/next/Hcnet-contract-env-meta.x
-//  xdr/next/Hcnet-contract-meta.x
-//  xdr/next/Hcnet-contract-spec.x
-//  xdr/next/Hcnet-contract.x
-//  xdr/next/Hcnet-internal.x
-//  xdr/next/Hcnet-ledger-entries.x
-//  xdr/next/Hcnet-ledger.x
-//  xdr/next/Hcnet-overlay.x
-//  xdr/next/Hcnet-transaction.x
-//  xdr/next/Hcnet-types.x
+//  xdr/next/Stellar-SCP.x
+//  xdr/next/Stellar-contract-config-setting.x
+//  xdr/next/Stellar-contract-env-meta.x
+//  xdr/next/Stellar-contract-meta.x
+//  xdr/next/Stellar-contract-spec.x
+//  xdr/next/Stellar-contract.x
+//  xdr/next/Stellar-internal.x
+//  xdr/next/Stellar-ledger-entries.x
+//  xdr/next/Stellar-ledger.x
+//  xdr/next/Stellar-overlay.x
+//  xdr/next/Stellar-transaction.x
+//  xdr/next/Stellar-types.x
 
 #![allow(clippy::missing_errors_doc, clippy::unreadable_literal)]
 
 /// `XDR_FILES_SHA256` is a list of pairs of source files and their SHA256 hashes.
 pub const XDR_FILES_SHA256: [(&str, &str); 12] = [
     (
-        "xdr/next/Hcnet-SCP.x",
+        "xdr/next/Stellar-SCP.x",
         "8f32b04d008f8bc33b8843d075e69837231a673691ee41d8b821ca229a6e802a",
     ),
     (
-        "xdr/next/Hcnet-contract-config-setting.x",
-        "e466c4dfae1d5d181afbd990b91f26c5d8ed84a7fa987875f8d643cf97e34a77",
+        "xdr/next/Stellar-contract-config-setting.x",
+        "fc42980e8710514679477f767ecad6f9348c38d24b1e4476fdd7e73e8e672ea8",
     ),
     (
-        "xdr/next/Hcnet-contract-env-meta.x",
+        "xdr/next/Stellar-contract-env-meta.x",
         "928a30de814ee589bc1d2aadd8dd81c39f71b7e6f430f56974505ccb1f49654b",
     ),
     (
-        "xdr/next/Hcnet-contract-meta.x",
+        "xdr/next/Stellar-contract-meta.x",
         "f01532c11ca044e19d9f9f16fe373e9af64835da473be556b9a807ee3319ae0d",
     ),
     (
-        "xdr/next/Hcnet-contract-spec.x",
+        "xdr/next/Stellar-contract-spec.x",
         "c7ffa21d2e91afb8e666b33524d307955426ff553a486d670c29217ed9888d49",
     ),
     (
-        "xdr/next/Hcnet-contract.x",
+        "xdr/next/Stellar-contract.x",
         "7f665e4103e146a88fcdabce879aaaacd3bf9283feb194cc47ff986264c1e315",
     ),
     (
-        "xdr/next/Hcnet-internal.x",
+        "xdr/next/Stellar-internal.x",
         "227835866c1b2122d1eaf28839ba85ea7289d1cb681dda4ca619c2da3d71fe00",
     ),
     (
-        "xdr/next/Hcnet-ledger-entries.x",
+        "xdr/next/Stellar-ledger-entries.x",
         "4f8f2324f567a40065f54f696ea1428740f043ea4154f5986d9f499ad00ac333",
     ),
     (
-        "xdr/next/Hcnet-ledger.x",
+        "xdr/next/Stellar-ledger.x",
         "2c842f3fe6e269498af5467f849cf6818554e90babc845f34c87cda471298d0f",
     ),
     (
-        "xdr/next/Hcnet-overlay.x",
+        "xdr/next/Stellar-overlay.x",
         "de3957c58b96ae07968b3d3aebea84f83603e95322d1fa336360e13e3aba737a",
     ),
     (
-        "xdr/next/Hcnet-transaction.x",
+        "xdr/next/Stellar-transaction.x",
         "0d2b35a331a540b48643925d0869857236eb2487c02d340ea32e365e784ea2b8",
     ),
     (
-        "xdr/next/Hcnet-types.x",
+        "xdr/next/Stellar-types.x",
         "6e3b13f0d3e360b09fa5e2b0e55d43f4d974a769df66afb34e8aecbb329d3f15",
     ),
 ];
@@ -4238,8 +4238,11 @@ impl WriteXdr for ContractCostParamEntry {
 ///     // Number of snapshots to use when calculating average BucketList size
 ///     uint32 bucketListSizeWindowSampleSize;
 ///
+///     // How often to sample the BucketList size for the average, in ledgers
+///     uint32 bucketListWindowSamplePeriod;
+///
 ///     // Maximum number of bytes that we scan for eviction per ledger
-///     uint64 evictionScanSize;
+///     uint32 evictionScanSize;
 ///
 ///     // Lowest BucketList level to be scanned to evict entries
 ///     uint32 startingEvictionScanLevel;
@@ -4261,7 +4264,8 @@ pub struct StateArchivalSettings {
     pub temp_rent_rate_denominator: i64,
     pub max_entries_to_archive: u32,
     pub bucket_list_size_window_sample_size: u32,
-    pub eviction_scan_size: u64,
+    pub bucket_list_window_sample_period: u32,
+    pub eviction_scan_size: u32,
     pub starting_eviction_scan_level: u32,
 }
 
@@ -4277,7 +4281,8 @@ impl ReadXdr for StateArchivalSettings {
                 temp_rent_rate_denominator: i64::read_xdr(r)?,
                 max_entries_to_archive: u32::read_xdr(r)?,
                 bucket_list_size_window_sample_size: u32::read_xdr(r)?,
-                eviction_scan_size: u64::read_xdr(r)?,
+                bucket_list_window_sample_period: u32::read_xdr(r)?,
+                eviction_scan_size: u32::read_xdr(r)?,
                 starting_eviction_scan_level: u32::read_xdr(r)?,
             })
         })
@@ -4295,6 +4300,7 @@ impl WriteXdr for StateArchivalSettings {
             self.temp_rent_rate_denominator.write_xdr(w)?;
             self.max_entries_to_archive.write_xdr(w)?;
             self.bucket_list_size_window_sample_size.write_xdr(w)?;
+            self.bucket_list_window_sample_period.write_xdr(w)?;
             self.eviction_scan_size.write_xdr(w)?;
             self.starting_eviction_scan_level.write_xdr(w)?;
             Ok(())
@@ -8194,7 +8200,7 @@ impl WriteXdr for Int256Parts {
 /// enum ContractExecutableType
 /// {
 ///     CONTRACT_EXECUTABLE_WASM = 0,
-///     CONTRACT_EXECUTABLE_Hcnet_ASSET = 1
+///     CONTRACT_EXECUTABLE_STELLAR_ASSET = 1
 /// };
 /// ```
 ///
@@ -8209,21 +8215,21 @@ impl WriteXdr for Int256Parts {
 #[repr(i32)]
 pub enum ContractExecutableType {
     Wasm = 0,
-    HcnetAsset = 1,
+    StellarAsset = 1,
 }
 
 impl ContractExecutableType {
     pub const VARIANTS: [ContractExecutableType; 2] = [
         ContractExecutableType::Wasm,
-        ContractExecutableType::HcnetAsset,
+        ContractExecutableType::StellarAsset,
     ];
-    pub const VARIANTS_STR: [&'static str; 2] = ["Wasm", "HcnetAsset"];
+    pub const VARIANTS_STR: [&'static str; 2] = ["Wasm", "StellarAsset"];
 
     #[must_use]
     pub const fn name(&self) -> &'static str {
         match self {
             Self::Wasm => "Wasm",
-            Self::HcnetAsset => "HcnetAsset",
+            Self::StellarAsset => "StellarAsset",
         }
     }
 
@@ -8260,7 +8266,7 @@ impl TryFrom<i32> for ContractExecutableType {
     fn try_from(i: i32) -> Result<Self> {
         let e = match i {
             0 => ContractExecutableType::Wasm,
-            1 => ContractExecutableType::HcnetAsset,
+            1 => ContractExecutableType::StellarAsset,
             #[allow(unreachable_patterns)]
             _ => return Err(Error::Invalid),
         };
@@ -8303,7 +8309,7 @@ impl WriteXdr for ContractExecutableType {
 /// {
 /// case CONTRACT_EXECUTABLE_WASM:
 ///     Hash wasm_hash;
-/// case CONTRACT_EXECUTABLE_Hcnet_ASSET:
+/// case CONTRACT_EXECUTABLE_STELLAR_ASSET:
 ///     void;
 /// };
 /// ```
@@ -8319,21 +8325,21 @@ impl WriteXdr for ContractExecutableType {
 #[allow(clippy::large_enum_variant)]
 pub enum ContractExecutable {
     Wasm(Hash),
-    HcnetAsset,
+    StellarAsset,
 }
 
 impl ContractExecutable {
     pub const VARIANTS: [ContractExecutableType; 2] = [
         ContractExecutableType::Wasm,
-        ContractExecutableType::HcnetAsset,
+        ContractExecutableType::StellarAsset,
     ];
-    pub const VARIANTS_STR: [&'static str; 2] = ["Wasm", "HcnetAsset"];
+    pub const VARIANTS_STR: [&'static str; 2] = ["Wasm", "StellarAsset"];
 
     #[must_use]
     pub const fn name(&self) -> &'static str {
         match self {
             Self::Wasm(_) => "Wasm",
-            Self::HcnetAsset => "HcnetAsset",
+            Self::StellarAsset => "StellarAsset",
         }
     }
 
@@ -8342,7 +8348,7 @@ impl ContractExecutable {
         #[allow(clippy::match_same_arms)]
         match self {
             Self::Wasm(_) => ContractExecutableType::Wasm,
-            Self::HcnetAsset => ContractExecutableType::HcnetAsset,
+            Self::StellarAsset => ContractExecutableType::StellarAsset,
         }
     }
 
@@ -8382,7 +8388,7 @@ impl ReadXdr for ContractExecutable {
             #[allow(clippy::match_same_arms, clippy::match_wildcard_for_single_variants)]
             let v = match dv {
                 ContractExecutableType::Wasm => Self::Wasm(Hash::read_xdr(r)?),
-                ContractExecutableType::HcnetAsset => Self::HcnetAsset,
+                ContractExecutableType::StellarAsset => Self::StellarAsset,
                 #[allow(unreachable_patterns)]
                 _ => return Err(Error::Invalid),
             };
@@ -8399,7 +8405,7 @@ impl WriteXdr for ContractExecutable {
             #[allow(clippy::match_same_arms)]
             match self {
                 Self::Wasm(v) => v.write_xdr(w)?,
-                Self::HcnetAsset => ().write_xdr(w)?,
+                Self::StellarAsset => ().write_xdr(w)?,
             };
             Ok(())
         })
@@ -9702,7 +9708,7 @@ impl WriteXdr for StoredTransactionSet {
 /// {
 /// 	StoredTransactionSet txSet;
 /// 	uint32 ledgerSeq;
-/// 	HcnetValue scpValue;
+/// 	StellarValue scpValue;
 /// };
 /// ```
 ///
@@ -9716,7 +9722,7 @@ impl WriteXdr for StoredTransactionSet {
 pub struct StoredDebugTransactionSet {
     pub tx_set: StoredTransactionSet,
     pub ledger_seq: u32,
-    pub scp_value: HcnetValue,
+    pub scp_value: StellarValue,
 }
 
 impl ReadXdr for StoredDebugTransactionSet {
@@ -9726,7 +9732,7 @@ impl ReadXdr for StoredDebugTransactionSet {
             Ok(Self {
                 tx_set: StoredTransactionSet::read_xdr(r)?,
                 ledger_seq: u32::read_xdr(r)?,
-                scp_value: HcnetValue::read_xdr(r)?,
+                scp_value: StellarValue::read_xdr(r)?,
             })
         })
     }
@@ -16877,13 +16883,13 @@ impl AsRef<[u8]> for UpgradeType {
     }
 }
 
-/// HcnetValueType is an XDR Enum defines as:
+/// StellarValueType is an XDR Enum defines as:
 ///
 /// ```text
-/// enum HcnetValueType
+/// enum StellarValueType
 /// {
-///     Hcnet_VALUE_BASIC = 0,
-///     Hcnet_VALUE_SIGNED = 1
+///     STELLAR_VALUE_BASIC = 0,
+///     STELLAR_VALUE_SIGNED = 1
 /// };
 /// ```
 ///
@@ -16896,13 +16902,13 @@ impl AsRef<[u8]> for UpgradeType {
     serde(rename_all = "snake_case")
 )]
 #[repr(i32)]
-pub enum HcnetValueType {
+pub enum StellarValueType {
     Basic = 0,
     Signed = 1,
 }
 
-impl HcnetValueType {
-    pub const VARIANTS: [HcnetValueType; 2] = [HcnetValueType::Basic, HcnetValueType::Signed];
+impl StellarValueType {
+    pub const VARIANTS: [StellarValueType; 2] = [StellarValueType::Basic, StellarValueType::Signed];
     pub const VARIANTS_STR: [&'static str; 2] = ["Basic", "Signed"];
 
     #[must_use]
@@ -16914,39 +16920,39 @@ impl HcnetValueType {
     }
 
     #[must_use]
-    pub const fn variants() -> [HcnetValueType; 2] {
+    pub const fn variants() -> [StellarValueType; 2] {
         Self::VARIANTS
     }
 }
 
-impl Name for HcnetValueType {
+impl Name for StellarValueType {
     #[must_use]
     fn name(&self) -> &'static str {
         Self::name(self)
     }
 }
 
-impl Variants<HcnetValueType> for HcnetValueType {
-    fn variants() -> slice::Iter<'static, HcnetValueType> {
+impl Variants<StellarValueType> for StellarValueType {
+    fn variants() -> slice::Iter<'static, StellarValueType> {
         Self::VARIANTS.iter()
     }
 }
 
-impl Enum for HcnetValueType {}
+impl Enum for StellarValueType {}
 
-impl fmt::Display for HcnetValueType {
+impl fmt::Display for StellarValueType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.name())
     }
 }
 
-impl TryFrom<i32> for HcnetValueType {
+impl TryFrom<i32> for StellarValueType {
     type Error = Error;
 
     fn try_from(i: i32) -> Result<Self> {
         let e = match i {
-            0 => HcnetValueType::Basic,
-            1 => HcnetValueType::Signed,
+            0 => StellarValueType::Basic,
+            1 => StellarValueType::Signed,
             #[allow(unreachable_patterns)]
             _ => return Err(Error::Invalid),
         };
@@ -16954,14 +16960,14 @@ impl TryFrom<i32> for HcnetValueType {
     }
 }
 
-impl From<HcnetValueType> for i32 {
+impl From<StellarValueType> for i32 {
     #[must_use]
-    fn from(e: HcnetValueType) -> Self {
+    fn from(e: StellarValueType) -> Self {
         e as Self
     }
 }
 
-impl ReadXdr for HcnetValueType {
+impl ReadXdr for StellarValueType {
     #[cfg(feature = "std")]
     fn read_xdr<R: Read>(r: &mut Limited<R>) -> Result<Self> {
         r.with_limited_depth(|r| {
@@ -16972,7 +16978,7 @@ impl ReadXdr for HcnetValueType {
     }
 }
 
-impl WriteXdr for HcnetValueType {
+impl WriteXdr for StellarValueType {
     #[cfg(feature = "std")]
     fn write_xdr<W: Write>(&self, w: &mut Limited<W>) -> Result<()> {
         w.with_limited_depth(|w| {
@@ -17027,19 +17033,19 @@ impl WriteXdr for LedgerCloseValueSignature {
     }
 }
 
-/// HcnetValueExt is an XDR NestedUnion defines as:
+/// StellarValueExt is an XDR NestedUnion defines as:
 ///
 /// ```text
-/// union switch (HcnetValueType v)
+/// union switch (StellarValueType v)
 ///     {
-///     case Hcnet_VALUE_BASIC:
+///     case STELLAR_VALUE_BASIC:
 ///         void;
-///     case Hcnet_VALUE_SIGNED:
+///     case STELLAR_VALUE_SIGNED:
 ///         LedgerCloseValueSignature lcValueSignature;
 ///     }
 /// ```
 ///
-// union with discriminant HcnetValueType
+// union with discriminant StellarValueType
 #[derive(Clone, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "arbitrary", derive(Arbitrary))]
 #[cfg_attr(
@@ -17048,13 +17054,13 @@ impl WriteXdr for LedgerCloseValueSignature {
     serde(rename_all = "snake_case")
 )]
 #[allow(clippy::large_enum_variant)]
-pub enum HcnetValueExt {
+pub enum StellarValueExt {
     Basic,
     Signed(LedgerCloseValueSignature),
 }
 
-impl HcnetValueExt {
-    pub const VARIANTS: [HcnetValueType; 2] = [HcnetValueType::Basic, HcnetValueType::Signed];
+impl StellarValueExt {
+    pub const VARIANTS: [StellarValueType; 2] = [StellarValueType::Basic, StellarValueType::Signed];
     pub const VARIANTS_STR: [&'static str; 2] = ["Basic", "Signed"];
 
     #[must_use]
@@ -17066,51 +17072,51 @@ impl HcnetValueExt {
     }
 
     #[must_use]
-    pub const fn discriminant(&self) -> HcnetValueType {
+    pub const fn discriminant(&self) -> StellarValueType {
         #[allow(clippy::match_same_arms)]
         match self {
-            Self::Basic => HcnetValueType::Basic,
-            Self::Signed(_) => HcnetValueType::Signed,
+            Self::Basic => StellarValueType::Basic,
+            Self::Signed(_) => StellarValueType::Signed,
         }
     }
 
     #[must_use]
-    pub const fn variants() -> [HcnetValueType; 2] {
+    pub const fn variants() -> [StellarValueType; 2] {
         Self::VARIANTS
     }
 }
 
-impl Name for HcnetValueExt {
+impl Name for StellarValueExt {
     #[must_use]
     fn name(&self) -> &'static str {
         Self::name(self)
     }
 }
 
-impl Discriminant<HcnetValueType> for HcnetValueExt {
+impl Discriminant<StellarValueType> for StellarValueExt {
     #[must_use]
-    fn discriminant(&self) -> HcnetValueType {
+    fn discriminant(&self) -> StellarValueType {
         Self::discriminant(self)
     }
 }
 
-impl Variants<HcnetValueType> for HcnetValueExt {
-    fn variants() -> slice::Iter<'static, HcnetValueType> {
+impl Variants<StellarValueType> for StellarValueExt {
+    fn variants() -> slice::Iter<'static, StellarValueType> {
         Self::VARIANTS.iter()
     }
 }
 
-impl Union<HcnetValueType> for HcnetValueExt {}
+impl Union<StellarValueType> for StellarValueExt {}
 
-impl ReadXdr for HcnetValueExt {
+impl ReadXdr for StellarValueExt {
     #[cfg(feature = "std")]
     fn read_xdr<R: Read>(r: &mut Limited<R>) -> Result<Self> {
         r.with_limited_depth(|r| {
-            let dv: HcnetValueType = <HcnetValueType as ReadXdr>::read_xdr(r)?;
+            let dv: StellarValueType = <StellarValueType as ReadXdr>::read_xdr(r)?;
             #[allow(clippy::match_same_arms, clippy::match_wildcard_for_single_variants)]
             let v = match dv {
-                HcnetValueType::Basic => Self::Basic,
-                HcnetValueType::Signed => Self::Signed(LedgerCloseValueSignature::read_xdr(r)?),
+                StellarValueType::Basic => Self::Basic,
+                StellarValueType::Signed => Self::Signed(LedgerCloseValueSignature::read_xdr(r)?),
                 #[allow(unreachable_patterns)]
                 _ => return Err(Error::Invalid),
             };
@@ -17119,7 +17125,7 @@ impl ReadXdr for HcnetValueExt {
     }
 }
 
-impl WriteXdr for HcnetValueExt {
+impl WriteXdr for StellarValueExt {
     #[cfg(feature = "std")]
     fn write_xdr<W: Write>(&self, w: &mut Limited<W>) -> Result<()> {
         w.with_limited_depth(|w| {
@@ -17134,10 +17140,10 @@ impl WriteXdr for HcnetValueExt {
     }
 }
 
-/// HcnetValue is an XDR Struct defines as:
+/// StellarValue is an XDR Struct defines as:
 ///
 /// ```text
-/// struct HcnetValue
+/// struct StellarValue
 /// {
 ///     Hash txSetHash;      // transaction set to apply to previous ledger
 ///     TimePoint closeTime; // network close time
@@ -17150,11 +17156,11 @@ impl WriteXdr for HcnetValueExt {
 ///     UpgradeType upgrades<6>;
 ///
 ///     // reserved for future use
-///     union switch (HcnetValueType v)
+///     union switch (StellarValueType v)
 ///     {
-///     case Hcnet_VALUE_BASIC:
+///     case STELLAR_VALUE_BASIC:
 ///         void;
-///     case Hcnet_VALUE_SIGNED:
+///     case STELLAR_VALUE_SIGNED:
 ///         LedgerCloseValueSignature lcValueSignature;
 ///     }
 ///     ext;
@@ -17168,14 +17174,14 @@ impl WriteXdr for HcnetValueExt {
     derive(serde::Serialize, serde::Deserialize),
     serde(rename_all = "snake_case")
 )]
-pub struct HcnetValue {
+pub struct StellarValue {
     pub tx_set_hash: Hash,
     pub close_time: TimePoint,
     pub upgrades: VecM<UpgradeType, 6>,
-    pub ext: HcnetValueExt,
+    pub ext: StellarValueExt,
 }
 
-impl ReadXdr for HcnetValue {
+impl ReadXdr for StellarValue {
     #[cfg(feature = "std")]
     fn read_xdr<R: Read>(r: &mut Limited<R>) -> Result<Self> {
         r.with_limited_depth(|r| {
@@ -17183,13 +17189,13 @@ impl ReadXdr for HcnetValue {
                 tx_set_hash: Hash::read_xdr(r)?,
                 close_time: TimePoint::read_xdr(r)?,
                 upgrades: VecM::<UpgradeType, 6>::read_xdr(r)?,
-                ext: HcnetValueExt::read_xdr(r)?,
+                ext: StellarValueExt::read_xdr(r)?,
             })
         })
     }
 }
 
-impl WriteXdr for HcnetValue {
+impl WriteXdr for StellarValue {
     #[cfg(feature = "std")]
     fn write_xdr<W: Write>(&self, w: &mut Limited<W>) -> Result<()> {
         w.with_limited_depth(|w| {
@@ -17588,7 +17594,7 @@ impl WriteXdr for LedgerHeaderExt {
 /// {
 ///     uint32 ledgerVersion;    // the protocol version of the ledger
 ///     Hash previousLedgerHash; // hash of the previous ledger header
-///     HcnetValue scpValue;   // what consensus agreed to
+///     StellarValue scpValue;   // what consensus agreed to
 ///     Hash txSetResultHash;    // the TransactionResultSet that led to this ledger
 ///     Hash bucketListHash;     // hash of the ledger state
 ///
@@ -17635,7 +17641,7 @@ impl WriteXdr for LedgerHeaderExt {
 pub struct LedgerHeader {
     pub ledger_version: u32,
     pub previous_ledger_hash: Hash,
-    pub scp_value: HcnetValue,
+    pub scp_value: StellarValue,
     pub tx_set_result_hash: Hash,
     pub bucket_list_hash: Hash,
     pub ledger_seq: u32,
@@ -17657,7 +17663,7 @@ impl ReadXdr for LedgerHeader {
             Ok(Self {
                 ledger_version: u32::read_xdr(r)?,
                 previous_ledger_hash: Hash::read_xdr(r)?,
-                scp_value: HcnetValue::read_xdr(r)?,
+                scp_value: StellarValue::read_xdr(r)?,
                 tx_set_result_hash: Hash::read_xdr(r)?,
                 bucket_list_hash: Hash::read_xdr(r)?,
                 ledger_seq: u32::read_xdr(r)?,
@@ -23518,10 +23524,10 @@ impl WriteXdr for FloodDemand {
     }
 }
 
-/// HcnetMessage is an XDR Union defines as:
+/// StellarMessage is an XDR Union defines as:
 ///
 /// ```text
-/// union HcnetMessage switch (MessageType type)
+/// union StellarMessage switch (MessageType type)
 /// {
 /// case ERROR_MSG:
 ///     Error error;
@@ -23582,7 +23588,7 @@ impl WriteXdr for FloodDemand {
     serde(rename_all = "snake_case")
 )]
 #[allow(clippy::large_enum_variant)]
-pub enum HcnetMessage {
+pub enum StellarMessage {
     ErrorMsg(SError),
     Hello(Hello),
     Auth(Auth),
@@ -23605,7 +23611,7 @@ pub enum HcnetMessage {
     FloodDemand(FloodDemand),
 }
 
-impl HcnetMessage {
+impl StellarMessage {
     pub const VARIANTS: [MessageType; 20] = [
         MessageType::ErrorMsg,
         MessageType::Hello,
@@ -23710,29 +23716,29 @@ impl HcnetMessage {
     }
 }
 
-impl Name for HcnetMessage {
+impl Name for StellarMessage {
     #[must_use]
     fn name(&self) -> &'static str {
         Self::name(self)
     }
 }
 
-impl Discriminant<MessageType> for HcnetMessage {
+impl Discriminant<MessageType> for StellarMessage {
     #[must_use]
     fn discriminant(&self) -> MessageType {
         Self::discriminant(self)
     }
 }
 
-impl Variants<MessageType> for HcnetMessage {
+impl Variants<MessageType> for StellarMessage {
     fn variants() -> slice::Iter<'static, MessageType> {
         Self::VARIANTS.iter()
     }
 }
 
-impl Union<MessageType> for HcnetMessage {}
+impl Union<MessageType> for StellarMessage {}
 
-impl ReadXdr for HcnetMessage {
+impl ReadXdr for StellarMessage {
     #[cfg(feature = "std")]
     fn read_xdr<R: Read>(r: &mut Limited<R>) -> Result<Self> {
         r.with_limited_depth(|r| {
@@ -23775,7 +23781,7 @@ impl ReadXdr for HcnetMessage {
     }
 }
 
-impl WriteXdr for HcnetMessage {
+impl WriteXdr for StellarMessage {
     #[cfg(feature = "std")]
     fn write_xdr<W: Write>(&self, w: &mut Limited<W>) -> Result<()> {
         w.with_limited_depth(|w| {
@@ -23814,7 +23820,7 @@ impl WriteXdr for HcnetMessage {
 /// struct
 ///     {
 ///         uint64 sequence;
-///         HcnetMessage message;
+///         StellarMessage message;
 ///         HmacSha256Mac mac;
 ///     }
 /// ```
@@ -23828,7 +23834,7 @@ impl WriteXdr for HcnetMessage {
 )]
 pub struct AuthenticatedMessageV0 {
     pub sequence: u64,
-    pub message: HcnetMessage,
+    pub message: StellarMessage,
     pub mac: HmacSha256Mac,
 }
 
@@ -23838,7 +23844,7 @@ impl ReadXdr for AuthenticatedMessageV0 {
         r.with_limited_depth(|r| {
             Ok(Self {
                 sequence: u64::read_xdr(r)?,
-                message: HcnetMessage::read_xdr(r)?,
+                message: StellarMessage::read_xdr(r)?,
                 mac: HmacSha256Mac::read_xdr(r)?,
             })
         })
@@ -23866,7 +23872,7 @@ impl WriteXdr for AuthenticatedMessageV0 {
 ///     struct
 ///     {
 ///         uint64 sequence;
-///         HcnetMessage message;
+///         StellarMessage message;
 ///         HmacSha256Mac mac;
 ///     } v0;
 /// };
@@ -42261,10 +42267,10 @@ pub enum TypeVariant {
     LedgerKeyTtl,
     EnvelopeType,
     UpgradeType,
-    HcnetValueType,
+    StellarValueType,
     LedgerCloseValueSignature,
-    HcnetValue,
-    HcnetValueExt,
+    StellarValue,
+    StellarValueExt,
     LedgerHeaderFlags,
     LedgerHeaderExtensionV1,
     LedgerHeaderExtensionV1Ext,
@@ -42344,7 +42350,7 @@ pub enum TypeVariant {
     FloodAdvert,
     TxDemandVector,
     FloodDemand,
-    HcnetMessage,
+    StellarMessage,
     AuthenticatedMessage,
     AuthenticatedMessageV0,
     LiquidityPoolParameters,
@@ -42683,10 +42689,10 @@ impl TypeVariant {
         TypeVariant::LedgerKeyTtl,
         TypeVariant::EnvelopeType,
         TypeVariant::UpgradeType,
-        TypeVariant::HcnetValueType,
+        TypeVariant::StellarValueType,
         TypeVariant::LedgerCloseValueSignature,
-        TypeVariant::HcnetValue,
-        TypeVariant::HcnetValueExt,
+        TypeVariant::StellarValue,
+        TypeVariant::StellarValueExt,
         TypeVariant::LedgerHeaderFlags,
         TypeVariant::LedgerHeaderExtensionV1,
         TypeVariant::LedgerHeaderExtensionV1Ext,
@@ -42766,7 +42772,7 @@ impl TypeVariant {
         TypeVariant::FloodAdvert,
         TypeVariant::TxDemandVector,
         TypeVariant::FloodDemand,
-        TypeVariant::HcnetMessage,
+        TypeVariant::StellarMessage,
         TypeVariant::AuthenticatedMessage,
         TypeVariant::AuthenticatedMessageV0,
         TypeVariant::LiquidityPoolParameters,
@@ -43103,10 +43109,10 @@ impl TypeVariant {
         "LedgerKeyTtl",
         "EnvelopeType",
         "UpgradeType",
-        "HcnetValueType",
+        "StellarValueType",
         "LedgerCloseValueSignature",
-        "HcnetValue",
-        "HcnetValueExt",
+        "StellarValue",
+        "StellarValueExt",
         "LedgerHeaderFlags",
         "LedgerHeaderExtensionV1",
         "LedgerHeaderExtensionV1Ext",
@@ -43186,7 +43192,7 @@ impl TypeVariant {
         "FloodAdvert",
         "TxDemandVector",
         "FloodDemand",
-        "HcnetMessage",
+        "StellarMessage",
         "AuthenticatedMessage",
         "AuthenticatedMessageV0",
         "LiquidityPoolParameters",
@@ -43529,10 +43535,10 @@ impl TypeVariant {
             Self::LedgerKeyTtl => "LedgerKeyTtl",
             Self::EnvelopeType => "EnvelopeType",
             Self::UpgradeType => "UpgradeType",
-            Self::HcnetValueType => "HcnetValueType",
+            Self::StellarValueType => "StellarValueType",
             Self::LedgerCloseValueSignature => "LedgerCloseValueSignature",
-            Self::HcnetValue => "HcnetValue",
-            Self::HcnetValueExt => "HcnetValueExt",
+            Self::StellarValue => "StellarValue",
+            Self::StellarValueExt => "StellarValueExt",
             Self::LedgerHeaderFlags => "LedgerHeaderFlags",
             Self::LedgerHeaderExtensionV1 => "LedgerHeaderExtensionV1",
             Self::LedgerHeaderExtensionV1Ext => "LedgerHeaderExtensionV1Ext",
@@ -43612,7 +43618,7 @@ impl TypeVariant {
             Self::FloodAdvert => "FloodAdvert",
             Self::TxDemandVector => "TxDemandVector",
             Self::FloodDemand => "FloodDemand",
-            Self::HcnetMessage => "HcnetMessage",
+            Self::StellarMessage => "StellarMessage",
             Self::AuthenticatedMessage => "AuthenticatedMessage",
             Self::AuthenticatedMessageV0 => "AuthenticatedMessageV0",
             Self::LiquidityPoolParameters => "LiquidityPoolParameters",
@@ -43985,10 +43991,10 @@ impl core::str::FromStr for TypeVariant {
             "LedgerKeyTtl" => Ok(Self::LedgerKeyTtl),
             "EnvelopeType" => Ok(Self::EnvelopeType),
             "UpgradeType" => Ok(Self::UpgradeType),
-            "HcnetValueType" => Ok(Self::HcnetValueType),
+            "StellarValueType" => Ok(Self::StellarValueType),
             "LedgerCloseValueSignature" => Ok(Self::LedgerCloseValueSignature),
-            "HcnetValue" => Ok(Self::HcnetValue),
-            "HcnetValueExt" => Ok(Self::HcnetValueExt),
+            "StellarValue" => Ok(Self::StellarValue),
+            "StellarValueExt" => Ok(Self::StellarValueExt),
             "LedgerHeaderFlags" => Ok(Self::LedgerHeaderFlags),
             "LedgerHeaderExtensionV1" => Ok(Self::LedgerHeaderExtensionV1),
             "LedgerHeaderExtensionV1Ext" => Ok(Self::LedgerHeaderExtensionV1Ext),
@@ -44068,7 +44074,7 @@ impl core::str::FromStr for TypeVariant {
             "FloodAdvert" => Ok(Self::FloodAdvert),
             "TxDemandVector" => Ok(Self::TxDemandVector),
             "FloodDemand" => Ok(Self::FloodDemand),
-            "HcnetMessage" => Ok(Self::HcnetMessage),
+            "StellarMessage" => Ok(Self::StellarMessage),
             "AuthenticatedMessage" => Ok(Self::AuthenticatedMessage),
             "AuthenticatedMessageV0" => Ok(Self::AuthenticatedMessageV0),
             "LiquidityPoolParameters" => Ok(Self::LiquidityPoolParameters),
@@ -44424,10 +44430,10 @@ pub enum Type {
     LedgerKeyTtl(Box<LedgerKeyTtl>),
     EnvelopeType(Box<EnvelopeType>),
     UpgradeType(Box<UpgradeType>),
-    HcnetValueType(Box<HcnetValueType>),
+    StellarValueType(Box<StellarValueType>),
     LedgerCloseValueSignature(Box<LedgerCloseValueSignature>),
-    HcnetValue(Box<HcnetValue>),
-    HcnetValueExt(Box<HcnetValueExt>),
+    StellarValue(Box<StellarValue>),
+    StellarValueExt(Box<StellarValueExt>),
     LedgerHeaderFlags(Box<LedgerHeaderFlags>),
     LedgerHeaderExtensionV1(Box<LedgerHeaderExtensionV1>),
     LedgerHeaderExtensionV1Ext(Box<LedgerHeaderExtensionV1Ext>),
@@ -44507,7 +44513,7 @@ pub enum Type {
     FloodAdvert(Box<FloodAdvert>),
     TxDemandVector(Box<TxDemandVector>),
     FloodDemand(Box<FloodDemand>),
-    HcnetMessage(Box<HcnetMessage>),
+    StellarMessage(Box<StellarMessage>),
     AuthenticatedMessage(Box<AuthenticatedMessage>),
     AuthenticatedMessageV0(Box<AuthenticatedMessageV0>),
     LiquidityPoolParameters(Box<LiquidityPoolParameters>),
@@ -44846,10 +44852,10 @@ impl Type {
         TypeVariant::LedgerKeyTtl,
         TypeVariant::EnvelopeType,
         TypeVariant::UpgradeType,
-        TypeVariant::HcnetValueType,
+        TypeVariant::StellarValueType,
         TypeVariant::LedgerCloseValueSignature,
-        TypeVariant::HcnetValue,
-        TypeVariant::HcnetValueExt,
+        TypeVariant::StellarValue,
+        TypeVariant::StellarValueExt,
         TypeVariant::LedgerHeaderFlags,
         TypeVariant::LedgerHeaderExtensionV1,
         TypeVariant::LedgerHeaderExtensionV1Ext,
@@ -44929,7 +44935,7 @@ impl Type {
         TypeVariant::FloodAdvert,
         TypeVariant::TxDemandVector,
         TypeVariant::FloodDemand,
-        TypeVariant::HcnetMessage,
+        TypeVariant::StellarMessage,
         TypeVariant::AuthenticatedMessage,
         TypeVariant::AuthenticatedMessageV0,
         TypeVariant::LiquidityPoolParameters,
@@ -45266,10 +45272,10 @@ impl Type {
         "LedgerKeyTtl",
         "EnvelopeType",
         "UpgradeType",
-        "HcnetValueType",
+        "StellarValueType",
         "LedgerCloseValueSignature",
-        "HcnetValue",
-        "HcnetValueExt",
+        "StellarValue",
+        "StellarValueExt",
         "LedgerHeaderFlags",
         "LedgerHeaderExtensionV1",
         "LedgerHeaderExtensionV1Ext",
@@ -45349,7 +45355,7 @@ impl Type {
         "FloodAdvert",
         "TxDemandVector",
         "FloodDemand",
-        "HcnetMessage",
+        "StellarMessage",
         "AuthenticatedMessage",
         "AuthenticatedMessageV0",
         "LiquidityPoolParameters",
@@ -46176,9 +46182,9 @@ impl Type {
             TypeVariant::UpgradeType => {
                 r.with_limited_depth(|r| Ok(Self::UpgradeType(Box::new(UpgradeType::read_xdr(r)?))))
             }
-            TypeVariant::HcnetValueType => r.with_limited_depth(|r| {
-                Ok(Self::HcnetValueType(Box::new(
-                    HcnetValueType::read_xdr(r)?,
+            TypeVariant::StellarValueType => r.with_limited_depth(|r| {
+                Ok(Self::StellarValueType(Box::new(
+                    StellarValueType::read_xdr(r)?,
                 )))
             }),
             TypeVariant::LedgerCloseValueSignature => r.with_limited_depth(|r| {
@@ -46186,11 +46192,11 @@ impl Type {
                     LedgerCloseValueSignature::read_xdr(r)?,
                 )))
             }),
-            TypeVariant::HcnetValue => r.with_limited_depth(|r| {
-                Ok(Self::HcnetValue(Box::new(HcnetValue::read_xdr(r)?)))
+            TypeVariant::StellarValue => r.with_limited_depth(|r| {
+                Ok(Self::StellarValue(Box::new(StellarValue::read_xdr(r)?)))
             }),
-            TypeVariant::HcnetValueExt => r.with_limited_depth(|r| {
-                Ok(Self::HcnetValueExt(Box::new(HcnetValueExt::read_xdr(
+            TypeVariant::StellarValueExt => r.with_limited_depth(|r| {
+                Ok(Self::StellarValueExt(Box::new(StellarValueExt::read_xdr(
                     r,
                 )?)))
             }),
@@ -46537,8 +46543,8 @@ impl Type {
             TypeVariant::FloodDemand => {
                 r.with_limited_depth(|r| Ok(Self::FloodDemand(Box::new(FloodDemand::read_xdr(r)?))))
             }
-            TypeVariant::HcnetMessage => r.with_limited_depth(|r| {
-                Ok(Self::HcnetMessage(Box::new(HcnetMessage::read_xdr(r)?)))
+            TypeVariant::StellarMessage => r.with_limited_depth(|r| {
+                Ok(Self::StellarMessage(Box::new(StellarMessage::read_xdr(r)?)))
             }),
             TypeVariant::AuthenticatedMessage => r.with_limited_depth(|r| {
                 Ok(Self::AuthenticatedMessage(Box::new(
@@ -48034,21 +48040,21 @@ impl Type {
                 ReadXdrIter::<_, UpgradeType>::new(&mut r.inner, r.limits.clone())
                     .map(|r| r.map(|t| Self::UpgradeType(Box::new(t)))),
             ),
-            TypeVariant::HcnetValueType => Box::new(
-                ReadXdrIter::<_, HcnetValueType>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueType(Box::new(t)))),
+            TypeVariant::StellarValueType => Box::new(
+                ReadXdrIter::<_, StellarValueType>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueType(Box::new(t)))),
             ),
             TypeVariant::LedgerCloseValueSignature => Box::new(
                 ReadXdrIter::<_, LedgerCloseValueSignature>::new(&mut r.inner, r.limits.clone())
                     .map(|r| r.map(|t| Self::LedgerCloseValueSignature(Box::new(t)))),
             ),
-            TypeVariant::HcnetValue => Box::new(
-                ReadXdrIter::<_, HcnetValue>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValue(Box::new(t)))),
+            TypeVariant::StellarValue => Box::new(
+                ReadXdrIter::<_, StellarValue>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValue(Box::new(t)))),
             ),
-            TypeVariant::HcnetValueExt => Box::new(
-                ReadXdrIter::<_, HcnetValueExt>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueExt(Box::new(t)))),
+            TypeVariant::StellarValueExt => Box::new(
+                ReadXdrIter::<_, StellarValueExt>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueExt(Box::new(t)))),
             ),
             TypeVariant::LedgerHeaderFlags => Box::new(
                 ReadXdrIter::<_, LedgerHeaderFlags>::new(&mut r.inner, r.limits.clone())
@@ -48378,9 +48384,9 @@ impl Type {
                 ReadXdrIter::<_, FloodDemand>::new(&mut r.inner, r.limits.clone())
                     .map(|r| r.map(|t| Self::FloodDemand(Box::new(t)))),
             ),
-            TypeVariant::HcnetMessage => Box::new(
-                ReadXdrIter::<_, HcnetMessage>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetMessage(Box::new(t)))),
+            TypeVariant::StellarMessage => Box::new(
+                ReadXdrIter::<_, StellarMessage>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarMessage(Box::new(t)))),
             ),
             TypeVariant::AuthenticatedMessage => Box::new(
                 ReadXdrIter::<_, AuthenticatedMessage>::new(&mut r.inner, r.limits.clone())
@@ -49901,9 +49907,9 @@ impl Type {
                 ReadXdrIter::<_, Frame<UpgradeType>>::new(&mut r.inner, r.limits.clone())
                     .map(|r| r.map(|t| Self::UpgradeType(Box::new(t.0)))),
             ),
-            TypeVariant::HcnetValueType => Box::new(
-                ReadXdrIter::<_, Frame<HcnetValueType>>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueType(Box::new(t.0)))),
+            TypeVariant::StellarValueType => Box::new(
+                ReadXdrIter::<_, Frame<StellarValueType>>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueType(Box::new(t.0)))),
             ),
             TypeVariant::LedgerCloseValueSignature => Box::new(
                 ReadXdrIter::<_, Frame<LedgerCloseValueSignature>>::new(
@@ -49912,13 +49918,13 @@ impl Type {
                 )
                 .map(|r| r.map(|t| Self::LedgerCloseValueSignature(Box::new(t.0)))),
             ),
-            TypeVariant::HcnetValue => Box::new(
-                ReadXdrIter::<_, Frame<HcnetValue>>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValue(Box::new(t.0)))),
+            TypeVariant::StellarValue => Box::new(
+                ReadXdrIter::<_, Frame<StellarValue>>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValue(Box::new(t.0)))),
             ),
-            TypeVariant::HcnetValueExt => Box::new(
-                ReadXdrIter::<_, Frame<HcnetValueExt>>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueExt(Box::new(t.0)))),
+            TypeVariant::StellarValueExt => Box::new(
+                ReadXdrIter::<_, Frame<StellarValueExt>>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueExt(Box::new(t.0)))),
             ),
             TypeVariant::LedgerHeaderFlags => Box::new(
                 ReadXdrIter::<_, Frame<LedgerHeaderFlags>>::new(&mut r.inner, r.limits.clone())
@@ -50290,9 +50296,9 @@ impl Type {
                 ReadXdrIter::<_, Frame<FloodDemand>>::new(&mut r.inner, r.limits.clone())
                     .map(|r| r.map(|t| Self::FloodDemand(Box::new(t.0)))),
             ),
-            TypeVariant::HcnetMessage => Box::new(
-                ReadXdrIter::<_, Frame<HcnetMessage>>::new(&mut r.inner, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetMessage(Box::new(t.0)))),
+            TypeVariant::StellarMessage => Box::new(
+                ReadXdrIter::<_, Frame<StellarMessage>>::new(&mut r.inner, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarMessage(Box::new(t.0)))),
             ),
             TypeVariant::AuthenticatedMessage => Box::new(
                 ReadXdrIter::<_, Frame<AuthenticatedMessage>>::new(&mut r.inner, r.limits.clone())
@@ -51862,21 +51868,21 @@ impl Type {
                 ReadXdrIter::<_, UpgradeType>::new(dec, r.limits.clone())
                     .map(|r| r.map(|t| Self::UpgradeType(Box::new(t)))),
             ),
-            TypeVariant::HcnetValueType => Box::new(
-                ReadXdrIter::<_, HcnetValueType>::new(dec, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueType(Box::new(t)))),
+            TypeVariant::StellarValueType => Box::new(
+                ReadXdrIter::<_, StellarValueType>::new(dec, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueType(Box::new(t)))),
             ),
             TypeVariant::LedgerCloseValueSignature => Box::new(
                 ReadXdrIter::<_, LedgerCloseValueSignature>::new(dec, r.limits.clone())
                     .map(|r| r.map(|t| Self::LedgerCloseValueSignature(Box::new(t)))),
             ),
-            TypeVariant::HcnetValue => Box::new(
-                ReadXdrIter::<_, HcnetValue>::new(dec, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValue(Box::new(t)))),
+            TypeVariant::StellarValue => Box::new(
+                ReadXdrIter::<_, StellarValue>::new(dec, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValue(Box::new(t)))),
             ),
-            TypeVariant::HcnetValueExt => Box::new(
-                ReadXdrIter::<_, HcnetValueExt>::new(dec, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetValueExt(Box::new(t)))),
+            TypeVariant::StellarValueExt => Box::new(
+                ReadXdrIter::<_, StellarValueExt>::new(dec, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarValueExt(Box::new(t)))),
             ),
             TypeVariant::LedgerHeaderFlags => Box::new(
                 ReadXdrIter::<_, LedgerHeaderFlags>::new(dec, r.limits.clone())
@@ -52194,9 +52200,9 @@ impl Type {
                 ReadXdrIter::<_, FloodDemand>::new(dec, r.limits.clone())
                     .map(|r| r.map(|t| Self::FloodDemand(Box::new(t)))),
             ),
-            TypeVariant::HcnetMessage => Box::new(
-                ReadXdrIter::<_, HcnetMessage>::new(dec, r.limits.clone())
-                    .map(|r| r.map(|t| Self::HcnetMessage(Box::new(t)))),
+            TypeVariant::StellarMessage => Box::new(
+                ReadXdrIter::<_, StellarMessage>::new(dec, r.limits.clone())
+                    .map(|r| r.map(|t| Self::StellarMessage(Box::new(t)))),
             ),
             TypeVariant::AuthenticatedMessage => Box::new(
                 ReadXdrIter::<_, AuthenticatedMessage>::new(dec, r.limits.clone())
@@ -53339,17 +53345,17 @@ impl Type {
             TypeVariant::UpgradeType => {
                 Ok(Self::UpgradeType(Box::new(serde_json::from_reader(r)?)))
             }
-            TypeVariant::HcnetValueType => Ok(Self::HcnetValueType(Box::new(
+            TypeVariant::StellarValueType => Ok(Self::StellarValueType(Box::new(
                 serde_json::from_reader(r)?,
             ))),
             TypeVariant::LedgerCloseValueSignature => Ok(Self::LedgerCloseValueSignature(
                 Box::new(serde_json::from_reader(r)?),
             )),
-            TypeVariant::HcnetValue => {
-                Ok(Self::HcnetValue(Box::new(serde_json::from_reader(r)?)))
+            TypeVariant::StellarValue => {
+                Ok(Self::StellarValue(Box::new(serde_json::from_reader(r)?)))
             }
-            TypeVariant::HcnetValueExt => {
-                Ok(Self::HcnetValueExt(Box::new(serde_json::from_reader(r)?)))
+            TypeVariant::StellarValueExt => {
+                Ok(Self::StellarValueExt(Box::new(serde_json::from_reader(r)?)))
             }
             TypeVariant::LedgerHeaderFlags => Ok(Self::LedgerHeaderFlags(Box::new(
                 serde_json::from_reader(r)?,
@@ -53570,8 +53576,8 @@ impl Type {
             TypeVariant::FloodDemand => {
                 Ok(Self::FloodDemand(Box::new(serde_json::from_reader(r)?)))
             }
-            TypeVariant::HcnetMessage => {
-                Ok(Self::HcnetMessage(Box::new(serde_json::from_reader(r)?)))
+            TypeVariant::StellarMessage => {
+                Ok(Self::StellarMessage(Box::new(serde_json::from_reader(r)?)))
             }
             TypeVariant::AuthenticatedMessage => Ok(Self::AuthenticatedMessage(Box::new(
                 serde_json::from_reader(r)?,
@@ -54232,10 +54238,10 @@ impl Type {
             Self::LedgerKeyTtl(ref v) => v.as_ref(),
             Self::EnvelopeType(ref v) => v.as_ref(),
             Self::UpgradeType(ref v) => v.as_ref(),
-            Self::HcnetValueType(ref v) => v.as_ref(),
+            Self::StellarValueType(ref v) => v.as_ref(),
             Self::LedgerCloseValueSignature(ref v) => v.as_ref(),
-            Self::HcnetValue(ref v) => v.as_ref(),
-            Self::HcnetValueExt(ref v) => v.as_ref(),
+            Self::StellarValue(ref v) => v.as_ref(),
+            Self::StellarValueExt(ref v) => v.as_ref(),
             Self::LedgerHeaderFlags(ref v) => v.as_ref(),
             Self::LedgerHeaderExtensionV1(ref v) => v.as_ref(),
             Self::LedgerHeaderExtensionV1Ext(ref v) => v.as_ref(),
@@ -54315,7 +54321,7 @@ impl Type {
             Self::FloodAdvert(ref v) => v.as_ref(),
             Self::TxDemandVector(ref v) => v.as_ref(),
             Self::FloodDemand(ref v) => v.as_ref(),
-            Self::HcnetMessage(ref v) => v.as_ref(),
+            Self::StellarMessage(ref v) => v.as_ref(),
             Self::AuthenticatedMessage(ref v) => v.as_ref(),
             Self::AuthenticatedMessageV0(ref v) => v.as_ref(),
             Self::LiquidityPoolParameters(ref v) => v.as_ref(),
@@ -54663,10 +54669,10 @@ impl Type {
             Self::LedgerKeyTtl(_) => "LedgerKeyTtl",
             Self::EnvelopeType(_) => "EnvelopeType",
             Self::UpgradeType(_) => "UpgradeType",
-            Self::HcnetValueType(_) => "HcnetValueType",
+            Self::StellarValueType(_) => "StellarValueType",
             Self::LedgerCloseValueSignature(_) => "LedgerCloseValueSignature",
-            Self::HcnetValue(_) => "HcnetValue",
-            Self::HcnetValueExt(_) => "HcnetValueExt",
+            Self::StellarValue(_) => "StellarValue",
+            Self::StellarValueExt(_) => "StellarValueExt",
             Self::LedgerHeaderFlags(_) => "LedgerHeaderFlags",
             Self::LedgerHeaderExtensionV1(_) => "LedgerHeaderExtensionV1",
             Self::LedgerHeaderExtensionV1Ext(_) => "LedgerHeaderExtensionV1Ext",
@@ -54746,7 +54752,7 @@ impl Type {
             Self::FloodAdvert(_) => "FloodAdvert",
             Self::TxDemandVector(_) => "TxDemandVector",
             Self::FloodDemand(_) => "FloodDemand",
-            Self::HcnetMessage(_) => "HcnetMessage",
+            Self::StellarMessage(_) => "StellarMessage",
             Self::AuthenticatedMessage(_) => "AuthenticatedMessage",
             Self::AuthenticatedMessageV0(_) => "AuthenticatedMessageV0",
             Self::LiquidityPoolParameters(_) => "LiquidityPoolParameters",
@@ -55118,10 +55124,10 @@ impl Type {
             Self::LedgerKeyTtl(_) => TypeVariant::LedgerKeyTtl,
             Self::EnvelopeType(_) => TypeVariant::EnvelopeType,
             Self::UpgradeType(_) => TypeVariant::UpgradeType,
-            Self::HcnetValueType(_) => TypeVariant::HcnetValueType,
+            Self::StellarValueType(_) => TypeVariant::StellarValueType,
             Self::LedgerCloseValueSignature(_) => TypeVariant::LedgerCloseValueSignature,
-            Self::HcnetValue(_) => TypeVariant::HcnetValue,
-            Self::HcnetValueExt(_) => TypeVariant::HcnetValueExt,
+            Self::StellarValue(_) => TypeVariant::StellarValue,
+            Self::StellarValueExt(_) => TypeVariant::StellarValueExt,
             Self::LedgerHeaderFlags(_) => TypeVariant::LedgerHeaderFlags,
             Self::LedgerHeaderExtensionV1(_) => TypeVariant::LedgerHeaderExtensionV1,
             Self::LedgerHeaderExtensionV1Ext(_) => TypeVariant::LedgerHeaderExtensionV1Ext,
@@ -55207,7 +55213,7 @@ impl Type {
             Self::FloodAdvert(_) => TypeVariant::FloodAdvert,
             Self::TxDemandVector(_) => TypeVariant::TxDemandVector,
             Self::FloodDemand(_) => TypeVariant::FloodDemand,
-            Self::HcnetMessage(_) => TypeVariant::HcnetMessage,
+            Self::StellarMessage(_) => TypeVariant::StellarMessage,
             Self::AuthenticatedMessage(_) => TypeVariant::AuthenticatedMessage,
             Self::AuthenticatedMessageV0(_) => TypeVariant::AuthenticatedMessageV0,
             Self::LiquidityPoolParameters(_) => TypeVariant::LiquidityPoolParameters,
@@ -55594,10 +55600,10 @@ impl WriteXdr for Type {
             Self::LedgerKeyTtl(v) => v.write_xdr(w),
             Self::EnvelopeType(v) => v.write_xdr(w),
             Self::UpgradeType(v) => v.write_xdr(w),
-            Self::HcnetValueType(v) => v.write_xdr(w),
+            Self::StellarValueType(v) => v.write_xdr(w),
             Self::LedgerCloseValueSignature(v) => v.write_xdr(w),
-            Self::HcnetValue(v) => v.write_xdr(w),
-            Self::HcnetValueExt(v) => v.write_xdr(w),
+            Self::StellarValue(v) => v.write_xdr(w),
+            Self::StellarValueExt(v) => v.write_xdr(w),
             Self::LedgerHeaderFlags(v) => v.write_xdr(w),
             Self::LedgerHeaderExtensionV1(v) => v.write_xdr(w),
             Self::LedgerHeaderExtensionV1Ext(v) => v.write_xdr(w),
@@ -55677,7 +55683,7 @@ impl WriteXdr for Type {
             Self::FloodAdvert(v) => v.write_xdr(w),
             Self::TxDemandVector(v) => v.write_xdr(w),
             Self::FloodDemand(v) => v.write_xdr(w),
-            Self::HcnetMessage(v) => v.write_xdr(w),
+            Self::StellarMessage(v) => v.write_xdr(w),
             Self::AuthenticatedMessage(v) => v.write_xdr(w),
             Self::AuthenticatedMessageV0(v) => v.write_xdr(w),
             Self::LiquidityPoolParameters(v) => v.write_xdr(w),

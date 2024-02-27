@@ -9,11 +9,11 @@
 //! Library and CLI containing types and functionality for working with Stellar
 //! XDR.
 //!
-//! Types are generated from XDR definitions hosted at [stellar/stellar-xdr]
+//! Types are generated from XDR definitions hosted at [hcnet/hcnet-xdr]
 //! using [xdrgen].
 //!
-//! [stellar/stellar-xdr]: https://github.com/stellar/stellar-xdr
-//! [xdrgen]: https://github.com/stellar/xdrgen
+//! [hcnet/hcnet-xdr]: https://github.com/hcnet/hcnet-xdr
+//! [xdrgen]: https://github.com/hcnet/xdrgen
 //!
 //! ## Usage
 //!
@@ -21,7 +21,7 @@
 //! To use the library, include in your toml:
 //!
 //! ```toml
-//! stellar-xdr = { version = "...", default-features = true, features = [] }
+//! hcnet-xdr = { version = "...", default-features = true, features = [] }
 //! ```
 //!
 //! #### Features
@@ -44,9 +44,9 @@
 //! lifetime values. No encode or decode capability exists. Encode and decode
 //! capability will be added in [#47].
 //!
-//! [#39]: https://github.com/stellar/rs-stellar-xdr/issues/39
-//! [#46]: https://github.com/stellar/rs-stellar-xdr/issues/46
-//! [#47]: https://github.com/stellar/rs-stellar-xdr/issues/47
+//! [#39]: https://github.com/hcnet/rs-hcnet-xdr/issues/39
+//! [#46]: https://github.com/hcnet/rs-hcnet-xdr/issues/46
+//! [#47]: https://github.com/hcnet/rs-hcnet-xdr/issues/47
 //!
 //! Ancillary functionality:
 //!
@@ -57,8 +57,8 @@
 //!
 //! Channels of XDR:
 //!
-//! - `curr` – XDR types built from the `stellar/stellar-xdr` `curr` branch.
-//! - `next` – XDR types built from the `stellar/stellar-xdr` `next` branch.
+//! - `curr` – XDR types built from the `hcnet/hcnet-xdr` `curr` branch.
+//! - `next` – XDR types built from the `hcnet/hcnet-xdr` `next` branch.
 //!
 //! If a single channel is enabled the types are available at the root of the
 //! crate. If multiple channels are enabled they are available in modules at
@@ -69,28 +69,28 @@
 //! To use the CLI:
 //!
 //! ```console
-//! cargo install --locked stellar-xdr --version ... --features cli
+//! cargo install --locked hcnet-xdr --version ... --features cli
 //! ```
 //!
 //! #### Examples
 //!
 //! Parse a `TransactionEnvelope`:
 //! ```console
-//! stellar-xdr decode --type TransactionEnvelope << -
+//! hcnet-xdr decode --type TransactionEnvelope << -
 //! AAAAA...
 //! -
 //! ```
 //!
 //! Parse a `ScSpecEntry` stream from a contract:
 //! ```console
-//! stellar-xdr +next decode --type ScSpecEntry --input stream-base64 --output json-formatted << -
+//! hcnet-xdr +next decode --type ScSpecEntry --input stream-base64 --output json-formatted << -
 //! AAAAA...
 //! -
 //! ```
 //!
 //! Parse a `BucketEntry` framed stream from a bucket file:
 //! ```console
-//! stellar-xdr decode --type BucketEntry --input stream-framed --output json-formatted bucket.xdr
+//! hcnet-xdr decode --type BucketEntry --input stream-framed --output json-formatted bucket.xdr
 //! ```
 
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord, Hash)]

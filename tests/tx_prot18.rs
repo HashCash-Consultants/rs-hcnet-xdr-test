@@ -5,11 +5,11 @@
 #![cfg(all(feature = "std", feature = "base64"))]
 
 #[cfg(feature = "curr")]
-use stellar_xdr::curr as stellar_xdr;
+use hcnet_xdr::curr as hcnet_xdr;
 #[cfg(feature = "next")]
-use stellar_xdr::next as stellar_xdr;
+use hcnet_xdr::next as hcnet_xdr;
 
-use stellar_xdr::{Error, Limits, OperationBody, ReadXdr, SequenceNumber, TransactionEnvelope};
+use hcnet_xdr::{Error, Limits, OperationBody, ReadXdr, SequenceNumber, TransactionEnvelope};
 
 #[test]
 fn test_parse_pubnet_v18_tx() -> Result<(), Error> {

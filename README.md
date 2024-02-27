@@ -1,6 +1,6 @@
 # hcnet-xdr
 
-Library and CLI containing types and functionality for working with hcnet
+Library and CLI containing types and functionality for working with Stellar
 XDR.
 
 Types are generated from XDR definitions hosted at [hcnet/hcnet-xdr]

@@ -4,23 +4,23 @@
 ))]
 
 #[cfg(feature = "curr")]
-use stellar_xdr::curr as stellar_xdr;
+use hcnet_xdr::curr as hcnet_xdr;
 #[cfg(feature = "next")]
-use stellar_xdr::next as stellar_xdr;
+use hcnet_xdr::next as hcnet_xdr;
 
-use stellar_xdr::{
+use hcnet_xdr::{
     Error, Memo, MuxedAccount, Preconditions, SequenceNumber, Transaction, TransactionEnvelope,
     TransactionExt, TransactionV1Envelope, Uint256,
 };
 #[cfg(all(feature = "std", feature = "base64"))]
-use stellar_xdr::{Limits, Type, TypeVariant};
+use hcnet_xdr::{Limits, Type, TypeVariant};
 
 #[cfg(all(feature = "std", feature = "base64"))]
 #[test]
 fn test_build_small_tx_with_std() -> Result<(), Error> {
     use std::str::FromStr;
 
-    use stellar_xdr::WriteXdr;
+    use hcnet_xdr::WriteXdr;
 
     let te = TransactionEnvelope::Tx(TransactionV1Envelope {
         tx: Transaction {
